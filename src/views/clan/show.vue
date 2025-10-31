@@ -56,7 +56,7 @@
     <div class="col-lg-8">
       <div class="card h-100">
         <div class="card-body p-24">
-          <ul class="nav border-gradient-tab nav-pills mb-20 d-inline-flex" id="pills-tab" role="tablist">
+          <ul class="nav border-gradient-tab nav-pills mb-20 d-inline-flex overflow-scroll flex-nowrap w-1000" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
               <button
                 :class="{active: route.params.name === 'show'}"
@@ -166,14 +166,17 @@
                     </div>
                   </div>
                 </div>
-                <div class="d-flex align-items-center justify-content-center gap-3">
-                  <button @click="cancel()" type="button"
-                          class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md px-56 py-11 radius-8">
-                    Отмена
-                  </button>
-                  <button type="submit" class="btn btn-primary border border-primary-600 text-md px-56 py-12 radius-8">
-                    Сохранить
-                  </button>
+                <div class="row">
+                  <div class="col-md-6 col-sm-12 mt-10">
+                    <button @click="cancel()" type="button" class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md py-11 radius-8 w-100 text-center">
+                      Отмена
+                    </button>
+                  </div>
+                  <div class="col-md-6 col-sm-12 mt-10">
+                    <button type="submit" class="btn btn-primary border border-primary-600 text-md py-12 radius-8 w-100">
+                      Сохранить
+                    </button>
+                  </div>
                 </div>
               </form>
             </div>
@@ -182,8 +185,8 @@
                  tabindex="1">
 
               <div class="d-flex align-items-center flex-wrap gap-3 justify-content-between mb-10">
-                <h6 class="text-md text-primary-light mb-16">Участники клана</h6>
-                <button v-if="formData.member_count < 6" @click="openModal()" class="btn btn-primary text-sm btn-sm px-12 py-12 radius-8 d-flex align-items-center gap-2">
+                <h6 class="text-md text-primary-light">Участники клана</h6>
+                <button v-if="formData.member_count < 8" @click="openModal()" class="btn btn-primary text-sm btn-sm px-12 py-12 radius-8 d-flex align-items-center gap-2">
                   <Icon icon="ic:baseline-plus" class="icon text-xl line-height-1"/>
                   Добавить участника
                 </button>
@@ -287,13 +290,17 @@
                 </div>
               </div>
 
-              <div class="mt-24">
-                <button @click="back()" type="button" class="border text-md px-56 py-11 radius-8">
-                  Назад
-                </button>
-                <button @click="removeClan()" type="button" class="border border-danger-400 mx-10 btn btn-danger text-md px-56 py-11 radius-8">
-                  Удалить
-                </button>
+              <div class="row mt-24">
+                <div class="col-md-6 col-sm-12 mt-10">
+                  <button @click="back()" type="button" class="border border-secondary-600 bg-hover-secondary-200 text-secondary-600 text-md py-11 radius-8 w-100 text-center">
+                    Отмена
+                  </button>
+                </div>
+                <div class="col-md-6 col-sm-12 mt-10">
+                  <button @click="removeClan()" type="submit" class="border border-danger-400 btn btn-danger text-md px-56 py-11 radius-8 w-100">
+                    Удалить
+                  </button>
+                </div>
               </div>
 
             </div>
@@ -323,7 +330,7 @@
                     </div>
                   </div><!-- chat-single-message end -->
                 </div>
-                <form @submit.prevent="sendMessage()" class="chat-message-box">
+                <form @submit.prevent="sendMessage()" class="chat-message-box d-flex flex-nowrap">
                   <input v-model="chatFormData.message" type="text" name="chatMessage" placeholder="Написать...">
                   <div class="chat-message-box-action">
                     <!--                    <button type="button" class="text-xl">-->
@@ -374,13 +381,17 @@
 <!--                  </select>-->
                 </div>
 
-                <div class="d-flex align-items-center justify-content-center gap-3 mt-24">
-                  <button @click="closeModal()" type="reset" class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md px-40 py-11 radius-8">
-                    Отмена
-                  </button>
-                  <button type="submit" class="btn btn-primary border border-primary-600 text-md px-48 py-12 radius-8">
-                    Сохранить
-                  </button>
+                <div class="row">
+                  <div class="col-md-6 col-sm-12 mt-10">
+                    <button @click="closeModal()" type="button" class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md py-11 radius-8 w-100 text-center">
+                      Отмена
+                    </button>
+                  </div>
+                  <div class="col-md-6 col-sm-12 mt-10">
+                    <button type="submit" class="btn btn-primary border border-primary-600 text-md py-12 radius-8 w-100">
+                      Сохранить
+                    </button>
+                  </div>
                 </div>
               </div>
             </form>

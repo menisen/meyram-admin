@@ -49,7 +49,7 @@
                   <label for="password" class="form-label fw-semibold text-primary-light text-sm mb-8">Пароль</label>
                   <input required v-model="profile.password" type="text" class="form-control radius-8" id="password" placeholder="Введите номер телефона">
                 </div>
-                <div class="mb-20">
+                <div class="mb-10">
                   <label for="number" class="form-label fw-semibold text-primary-light text-sm mb-8">Роль</label>
                   <select required v-model="profile.role" class="form-control radius-8 form-select" id="desig">
                     <option value="curator">Куратор </option>
@@ -58,13 +58,17 @@
                     <option value="users">Участник</option>
                   </select>
                 </div>
-                <div class="d-flex align-items-center justify-content-center gap-3">
-                  <button @click="cancel()" type="button" class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md px-56 py-11 radius-8">
-                    Отмена
-                  </button>
-                  <button type="submit" class="btn btn-primary border border-primary-600 text-md px-56 py-12 radius-8">
-                    Сохранить
-                  </button>
+                <div class="row">
+                  <div class="col-lg-6 col-sm-12 mt-10">
+                    <button @click="cancel()" type="button" class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md py-11 radius-8 w-100 text-center">
+                      Отмена
+                    </button>
+                  </div>
+                  <div class="col-lg-6 col-sm-12 mt-10">
+                    <button type="submit" class="btn btn-primary border border-primary-600 text-md py-12 radius-8 w-100">
+                      Сохранить
+                    </button>
+                  </div>
                 </div>
               </form>
             </div>

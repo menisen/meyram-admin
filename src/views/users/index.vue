@@ -27,7 +27,7 @@
       </router-link>
     </div>
     <div class="card-body">
-      <div id="dataTable_wrapper" class="dt-container dt-empty-footer">
+      <div id="dataTable_wrapper" class="dt-container dt-empty-footer table-responsive scroll-sm">
         <div class="dt-layout-row dt-layout-table">
           <div class="dt-layout-cell ">
             <table

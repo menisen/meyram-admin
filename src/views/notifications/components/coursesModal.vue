@@ -54,7 +54,7 @@
                   </div>
                   <div class="col-12 mb-20">
                     <label class="form-label fw-semibold text-primary-light text-sm mb-8">Описание</label>
-                    <textarea disabled v-model="formData.id.description" type="text" class="form-control radius-8" placeholder="Введите ссылку"></textarea>
+                    <textarea v-model="formData.id.description" type="text" class="form-control radius-8" placeholder="Введите ссылку"></textarea>
                   </div>
                 </template>
 
@@ -113,7 +113,6 @@ const lessonsList = computed(() => {
 })
 
 const getData = async () => {
-  console.log(props.modalData)
   await api.get(`/library/resources`)
     .then((res) => {
       lessons.value = res.data?.data

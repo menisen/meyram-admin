@@ -34,7 +34,7 @@
         </router-link>
       </div>
     </div>
-    <div class="card-body">
+    <div class="card-body pb-40">
       <div v-show="showFilters" class="filter">
         <div class="row">
           <div v-if="role === 'admin'" class="col-sm-3">

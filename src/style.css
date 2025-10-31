@@ -14847,7 +14847,7 @@ td.fc-header-center {
   width: 15.625rem;
   height: 100vh;
   background-color: var(--white);
-  z-index: 3;
+  z-index: 4;
 }
 
 @media (min-width: 1200px) {

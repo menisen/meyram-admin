@@ -64,13 +64,18 @@
                   <label for="description" class="form-label fw-semibold text-primary-light text-sm mb-8">Описание</label>
                   <textarea v-model="formData.description" required class="form-control radius-8" name="description" id="description" cols="30" rows="5"></textarea>
                 </div>
-                <div class="d-flex align-items-center justify-content-center gap-3">
-                  <button @click="cancel()" type="button" class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md px-56 py-11 radius-8">
-                    Отмена
-                  </button>
-                  <button @click="save()" type="submit" class="btn btn-primary border border-primary-600 text-md px-56 py-12 radius-8">
-                    Сохранить
-                  </button>
+
+                <div class="row">
+                  <div class="col-md-6 col-sm-12 mt-10">
+                    <button @click="cancel()" type="button" class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md py-11 radius-8 w-100 text-center">
+                      Отмена
+                    </button>
+                  </div>
+                  <div @click="save()" class="col-md-6 col-sm-12 mt-10">
+                    <button type="submit" class="btn btn-primary border border-primary-600 text-md py-12 radius-8 w-100">
+                      Сохранить
+                    </button>
+                  </div>
                 </div>
               </form>
             </div>

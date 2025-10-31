@@ -22,7 +22,7 @@
           <Icon icon="ion:search-outline" class="icon"/>
         </form>
       </div>
-      <div class="col-sm-3 mb-20">
+      <div class="col-md-3 col-sm-6 mb-20">
         <label for="curators" class="form-label fw-semibold text-primary-light text-sm mb-8">Лига</label>
         <select required v-model="filter.league" class="form-control radius-8 form-select" id="curators">
           <option value="all">Все</option>
@@ -31,7 +31,7 @@
         </select>
       </div>
     </div>
-    <div class="card-body">
+    <div class="card-body pb-48">
       <div id="dataTable_wrapper" class="dt-container dt-empty-footer">
         <div class="dt-layout-row dt-layout-table table-responsive scroll-sm">
           <div class="dt-layout-cell ">

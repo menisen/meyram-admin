@@ -36,7 +36,7 @@
               </div>
               <!-- Upload Image End -->
 
-              <form action="#">
+              <form @submit.prevent action="#">
                 <div class="mb-20">
                   <label for="name" class="form-label fw-semibold text-primary-light text-sm mb-8">ФИО<span class="text-danger-600">*</span></label>
                   <input type="text" class="form-control radius-8" id="name" placeholder="Введите ФИО">
@@ -49,13 +49,17 @@
                   <label for="number" class="form-label fw-semibold text-primary-light text-sm mb-8">Instagram</label>
                   <input type="email" class="form-control radius-8" id="instagram" placeholder="Введите instagram">
                 </div>
-                <div class="d-flex align-items-center justify-content-center gap-3">
-                  <button @click="cancel()" type="button" class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md px-56 py-11 radius-8">
-                    Отмена
-                  </button>
-                  <button @click="save()" type="submit" class="btn btn-primary border border-primary-600 text-md px-56 py-12 radius-8">
-                    Сохранить
-                  </button>
+                <div class="row">
+                  <div class="col-lg-6 col-sm-12 mt-10">
+                    <button @click="cancel()" type="button" class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md py-11 radius-8 w-100 text-center">
+                      Отмена
+                    </button>
+                  </div>
+                  <div class="col-lg-6 col-sm-12 mt-10">
+                    <button @click="save()" type="submit" class="btn btn-primary border border-primary-600 text-md py-12 radius-8 w-100">
+                      Сохранить
+                    </button>
+                  </div>
                 </div>
               </form>
             </div>

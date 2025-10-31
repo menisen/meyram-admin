@@ -10,7 +10,8 @@
         <!--          <Icon icon="ion:search-outline" class="icon"/>-->
         <!--        </form>-->
       </div>
-      <div class="d-flex align-items-center">
+      <div class="d-flex align-items-center justify-content-between">
+        <h6 class="fw-semibold mb-0">Уроки</h6>
         <a
           class="btn btn-primary text-sm btn-sm px-12 py-12 radius-8 d-flex align-items-center gap-2"
           @click="openModal()"

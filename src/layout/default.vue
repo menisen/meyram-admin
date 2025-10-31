@@ -1,11 +1,11 @@
 <template>
   <div class="default flex">
-    <aside class="sidebar" :class="{'active': !showMenu}">
-      <button type="button" class="sidebar-close-btn">
+    <aside class="sidebar " :class="{'active': !showMenu, 'sidebar-open': showMobileMenu}">
+      <button @click="toggleMobileMenu()" type="button" class="sidebar-close-btn">
         <Icon icon="radix-icons:cross-2"></Icon>
       </button>
       <div>
-        <a href="index.html" class="sidebar-logo">
+        <a href="/" class="sidebar-logo">
           <img src="@/assets/images/logo.png" alt="site logo"
                class="light-logo">
           <img src="@/assets/images/logo.png" alt="site logo"
@@ -17,7 +17,7 @@
         </a>
       </div>
       <div class="sidebar-menu-area open">
-        <ul class="sidebar-menu show" id="sidebar-menu">
+        <ul @click="toggleMobileMenu(true)" class="sidebar-menu show" id="sidebar-menu">
           <li class="">
             <router-link to="/" class="cursor-pointer" :class="{'active-page': route.name === 'home'}">
               <Icon icon="solar:home-smile-angle-outline" class="menu-icon"></Icon>
@@ -28,6 +28,18 @@
             <router-link to="/users" class=" cursor-pointer" :class="{'active-page': route.path?.includes('users')}">
               <Icon icon="solar:user-outline" class="menu-icon"></Icon>
               <span>Сотрудники</span>
+            </router-link>
+          </li>
+          <li v-if="role === 'admin'" class="">
+            <router-link to="/courses" class=" cursor-pointer" :class="{'active-page': route.path?.includes('courses')}">
+              <Icon icon="hugeicons:course" class="menu-icon"></Icon>
+              <span>Уроки</span>
+            </router-link>
+          </li>
+          <li v-if="role === 'admin'" class="">
+            <router-link to="/lives" class=" cursor-pointer" :class="{'active-page': route.path?.includes('lives')}">
+              <Icon icon="mingcute:live-line" class="menu-icon"></Icon>
+              <span>Эфир</span>
             </router-link>
           </li>
           <li class="">
@@ -57,15 +69,15 @@
           <li class="">
             <router-link to="/projects" class=" cursor-pointer" :class="{'active-page': route.path?.includes('projects')}">
               <Icon icon="carbon:ibm-cloud-projects" class="menu-icon"></Icon>
-              <span>Проекты</span>
+              <span>События</span>
             </router-link>
           </li>
-          <li class="">
-            <router-link to="/notifications/courses" class=" cursor-pointer" :class="{'active-page': route.path?.includes('notifications')}">
-              <Icon icon="ant-design:notification-filled" class="menu-icon"></Icon>
-              <span>Уведомления</span>
-            </router-link>
-          </li>
+<!--          <li class="">-->
+<!--            <router-link to="/notifications/courses" class=" cursor-pointer" :class="{'active-page': route.path?.includes('notifications')}">-->
+<!--              <Icon icon="ant-design:notification-filled" class="menu-icon"></Icon>-->
+<!--              <span>Уведомления</span>-->
+<!--            </router-link>-->
+<!--          </li>-->
 <!--          <li class="">-->
 <!--            <router-link to="/role" class=" cursor-pointer" :class="{'active-page': route.name === 'role'}">-->
 <!--              <Icon icon="solar:chart-2-bold" class="menu-icon"></Icon>-->
@@ -84,7 +96,7 @@
                 <Icon icon="heroicons:bars-3-solid" class="icon text-2xl non-active"></Icon>
                 <Icon icon="iconoir:arrow-right" class="icon text-2xl active"></Icon>
               </button>
-              <button @click="toggleMenu()" type="button" class="sidebar-mobile-toggle">
+              <button @click="toggleMobileMenu()" type="button" class="sidebar-mobile-toggle">
                 <Icon icon="heroicons:bars-3-solid" class="icon"></Icon>
               </button>
             </div>
@@ -135,6 +147,9 @@
             </div>
           </div>
         </div>
+        <div @click="toggleMobileMenu()" v-if="showMobileMenu" class="modal-backdrop fade show">
+
+        </div>
       </div>
       <div class="dashboard-main-body">
         <router-view/>
@@ -149,18 +164,26 @@ import {useRoute, useRouter} from 'vue-router'
 import {onMounted, ref} from 'vue'
 import Cookies from 'js-cookie'
 import { Icon } from '@iconify/vue'
-import api from "@/utils/api.js";
+import api from '@/utils/api.js'
 
 const route = useRoute()
 const router = useRouter()
 
 const showMenu = ref(true)
+const showMobileMenu = ref(false)
 const showProfile = ref(false)
 const role = Cookies.get('admin-meyram-role')
 const profile = ref(null)
 
 const toggleMenu = () => {
   showMenu.value = !showMenu.value
+}
+const toggleMobileMenu = (close) => {
+  if (close) {
+    showMobileMenu.value = false
+  } else {
+    showMobileMenu.value = !showMobileMenu.value
+  }
 }
 const toggleProfile = () => {
   showProfile.value = !showProfile.value

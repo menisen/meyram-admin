@@ -38,7 +38,7 @@
         </router-link>
       </div>
     </div>
-    <div class="card-body">
+    <div class="card-body pb-48">
       <div id="dataTable_wrapper" class="dt-container dt-empty-footer">
         <div class="dt-layout-row dt-layout-table table-responsive scroll-sm">
           <div class="dt-layout-cell ">

@@ -64,7 +64,7 @@
     <div class="col-lg-8">
       <div class="card h-100">
         <div class="card-body p-24">
-          <ul class="nav border-gradient-tab nav-pills mb-20 d-inline-flex" id="pills-tab" role="tablist">
+          <ul class="nav border-gradient-tab nav-pills mb-20 d-inline-flex overflow-scroll flex-nowrap w-100" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
               <button
                 :class="{active: route.params.name === 'show'}"
@@ -177,7 +177,7 @@
                 <form @submit.prevent="editCurator()">
                   <div class="row">
                     <div class="col-sm-6">
-                      <div class="mb-20">
+                      <div class="">
                         <label for="curator" class="form-label fw-semibold text-primary-light text-sm mb-8">Куратор <span class="text-danger-600">*</span></label>
                         <select required v-model="profile.curator_id" class="form-control radius-8 form-select" id="curator">
                           <option :value="null">Все</option>
@@ -185,14 +185,11 @@
                         </select>
                       </div>
                     </div>
-                  </div>
-                  <div class="d-flex align-items-center justify-content-end gap-3">
-                    <!--                  <button @click="cancel()" type="button" class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md px-56 py-11 radius-8">-->
-                    <!--                    Отмена-->
-                    <!--                  </button>-->
-                    <button type="submit" class="btn btn-primary border border-primary-600 text-md px-56 py-12 radius-8">
-                      Сохранить
-                    </button>
+                    <div class="col-md-6 col-sm-12 d-flex flex-column justify-content-end mt-10">
+                      <button type="submit" class="btn btn-primary border border-primary-600 text-md py-12 radius-8 w-100">
+                        Сохранить
+                      </button>
+                    </div>
                   </div>
                 </form>
               </template>
@@ -225,13 +222,13 @@
                       </div>
                     </div>
                   </div>
-                  <div class="d-flex align-items-center justify-content-end gap-3">
-                    <!--                  <button @click="cancel()" type="button" class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md px-56 py-11 radius-8">-->
-                    <!--                    Отмена-->
-                    <!--                  </button>-->
-                    <button type="submit" class="btn btn-primary border border-primary-600 text-md px-56 py-12 radius-8">
-                      Сохранить
-                    </button>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-12"></div>
+                    <div class="col-md-6 col-sm-12 d-flex justify-content-end">
+                      <button type="submit" class="btn btn-primary border border-primary-600 text-md py-12 radius-8 w-100">
+                        Сохранить
+                      </button>
+                    </div>
                   </div>
                 </form>
               </template>
@@ -239,9 +236,9 @@
                 <h6 class="text-md text-primary-light my-16">Обнулить коины</h6>
                 <!-- Upload Image End -->
                 <form @submit.prevent="resetCoins()">
-                  <div class="col-sm-6">
+                  <div class="col-md-6 col-sm-12">
                     <div class="mb-20">
-                      <button type="submit" class="btn btn-primary border border-primary-600 text-md px-56 py-12 radius-8">
+                      <button type="submit" class="btn btn-primary border border-primary-600 text-md px-56 py-12 radius-8 w-100">
                         Обнулить
                       </button>
                     </div>
@@ -349,7 +346,7 @@
                     </div>
                   </div><!-- chat-single-message end -->
                 </div>
-                <form @submit.prevent="sendMessage()" class="chat-message-box">
+                <form @submit.prevent="sendMessage()" class="chat-message-box d-flex flex-nowrap">
                   <textarea v-model="chatFormData.message" type="text" name="chatMessage" placeholder="Написать..."></textarea>
                   <div class="chat-message-box-action">
 <!--                    <button type="button" class="text-xl">-->

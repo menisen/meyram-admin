@@ -1,7 +1,6 @@
 <template>
   <div class="card basic-data-table">
-    <div
-      class="card-header border-bottom bg-base py-16 px-24">
+    <div class="card-header border-bottom bg-base py-16 px-24">
       <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
         <!--        <span class="text-md fw-medium text-secondary-light mb-0">Список единицы измерения</span>-->
         <!--        <form @submit.prevent class="navbar-search">-->
@@ -10,7 +9,8 @@
         <!--          <Icon icon="ion:search-outline" class="icon"/>-->
         <!--        </form>-->
       </div>
-      <div class="d-flex align-items-center">
+      <div class="d-flex align-items-center justify-content-between">
+        <h6 class="fw-semibold mb-0">Эфиры</h6>
         <a
           class="btn btn-primary text-sm btn-sm px-12 py-12 radius-8 d-flex align-items-center gap-2"
           @click="openModal()"

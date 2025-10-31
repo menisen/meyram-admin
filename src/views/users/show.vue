@@ -117,14 +117,17 @@
                     </div>
                   </div>
                 </div>
-                <div class="d-flex align-items-center justify-content-center gap-3">
-                  <button @click="cancel()" type="button"
-                          class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md px-56 py-11 radius-8">
-                    Отмена
-                  </button>
-                  <button type="submit" class="btn btn-primary border border-primary-600 text-md px-56 py-12 radius-8">
-                    Сохранить
-                  </button>
+                <div class="row">
+                  <div class="col-md-6 col-sm-12 mt-10">
+                    <button @click="cancel()" type="button" class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md py-11 radius-8 w-100 text-center">
+                      Отмена
+                    </button>
+                  </div>
+                  <div class="col-md-6 col-sm-12 mt-10">
+                    <button type="submit" class="btn btn-primary border border-primary-600 text-md py-12 radius-8 w-100">
+                      Сохранить
+                    </button>
+                  </div>
                 </div>
               </form>
             </div>
@@ -133,6 +136,11 @@
                  tabindex="1">
 
               <h6 class="text-md text-primary-light mb-16">Участники сотрудника</h6>
+              <form @submit.prevent class="navbar-search mb-10">
+                <input v-model="filter.name" @input="filterNameHandler" type="text" class="bg-base h-40-px w-full"
+                       name="search" placeholder="Поиск по имени, телефону, instagram">
+                <Icon icon="ion:search-outline" class="icon"/>
+              </form>
               <div class="table-responsive scroll-sm">
                 <div class="dt-layout-cell ">
                   <table
@@ -203,7 +211,7 @@
                     </thead>
                     <tbody>
                     <tr
-                      v-for="item in children"
+                      v-for="item in paginateList"
                       :key="item.id"
                     >
                       <td class="sorting_1">
@@ -230,6 +238,44 @@
                   </table>
                 </div>
               </div>
+              <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 page-bottom mt-20">
+              <span>Показано с {{ (filter.page - 1) * filter.size + 1 }} по {{
+                  (filter.page) * Math.min(filter.size, filterList.length)
+                }} из {{ Math.ceil(filterList.length / filter.size) }} записей</span>
+                <paginate
+                  v-model="filter.page"
+                  :pages="Math.ceil(filterList.length / filter.size)"
+                  :range-size="1"
+                  active-color="#DCEDFF"
+                  @update:modelValue="changePaginateHandler"
+
+                >
+                </paginate>
+
+                <!--          <ul class="pagination d-flex flex-wrap align-items-center gap-2 justify-content-center">-->
+                <!--            <li class="page-item">-->
+                <!--              <a class="page-link bg-neutral-200 text-secondary-light fw-semibold radius-8 border-0 d-flex align-items-center justify-content-center h-32-px w-32-px text-md" href="javascript:void(0)"><Icon icon="ep:d-arrow-left" class=""></Icon></a>-->
+                <!--            </li>-->
+                <!--            <li class="page-item">-->
+                <!--              <a class="page-link text-secondary-light fw-semibold radius-8 border-0 d-flex align-items-center justify-content-center h-32-px w-32-px text-md bg-primary-600 text-white" href="javascript:void(0)">1</a>-->
+                <!--            </li>-->
+                <!--            <li class="page-item">-->
+                <!--              <a class="page-link bg-neutral-200 text-secondary-light fw-semibold radius-8 border-0 d-flex align-items-center justify-content-center h-32-px w-32-px" href="javascript:void(0)">2</a>-->
+                <!--            </li>-->
+                <!--            <li class="page-item">-->
+                <!--              <a class="page-link bg-neutral-200 text-secondary-light fw-semibold radius-8 border-0 d-flex align-items-center justify-content-center h-32-px w-32-px text-md" href="javascript:void(0)">3</a>-->
+                <!--            </li>-->
+                <!--            <li class="page-item">-->
+                <!--              <a class="page-link bg-neutral-200 text-secondary-light fw-semibold radius-8 border-0 d-flex align-items-center justify-content-center h-32-px w-32-px text-md" href="javascript:void(0)">4</a>-->
+                <!--            </li>-->
+                <!--            <li class="page-item">-->
+                <!--              <a class="page-link bg-neutral-200 text-secondary-light fw-semibold radius-8 border-0 d-flex align-items-center justify-content-center h-32-px w-32-px text-md" href="javascript:void(0)">5</a>-->
+                <!--            </li>-->
+                <!--            <li class="page-item">-->
+                <!--              <a class="page-link bg-neutral-200 text-secondary-light fw-semibold radius-8 border-0 d-flex align-items-center justify-content-center h-32-px w-32-px text-md" href="javascript:void(0)"> <Icon icon="ep:d-arrow-right" class=""></Icon> </a>-->
+                <!--            </li>-->
+                <!--          </ul>-->
+              </div>
 
               <div class="mt-24">
                 <button @click="back()" type="button" class="border text-md px-56 py-11 radius-8">
@@ -246,11 +292,13 @@
 </template>
 
 <script setup>
-import {onMounted, ref} from 'vue'
+import {computed, onMounted, ref} from 'vue'
 import api from '@/utils/api.js'
 import {useRoute, useRouter} from 'vue-router'
 import {useToast} from 'vue-toastification'
 import {Icon} from "@iconify/vue"
+import Paginate from "@hennge/vue3-pagination";
+import '@hennge/vue3-pagination/dist/vue3-pagination.css'
 // import { vMaska } from "maska"
 
 const child = ref([])
@@ -263,6 +311,12 @@ const profile = ref({
   full_name: '',
   phone: '',
   role: ''
+})
+const filter = ref({
+  name: '',
+  page: 1,
+  size: 10,
+  tariff: 'all'
 })
 
 const data = async () => {
@@ -284,6 +338,56 @@ const data = async () => {
       console.log(e, e.response, e.request)
     })
 }
+
+function sortCustom(arr, key, order = "asc") {
+  const categoryOrderAsc = ["latin", "cyrillic", "digit", "other"];
+  const categoryOrderDesc = ["digit", "cyrillic", "latin", "other"];
+
+  const getCategory = (str) => {
+    if (/^[A-Za-z]/.test(str)) return "latin";
+    if (/^[А-Яа-яЁё]/.test(str)) return "cyrillic";
+    if (/^\d/.test(str)) return "digit";
+    return "other";
+  };
+
+  return arr.sort((a, b) => {
+    const va = a[key] ?? "";
+    const vb = b[key] ?? "";
+
+    const ca = getCategory(va);
+    const cb = getCategory(vb);
+
+    const orderArr = order === "desc" ? categoryOrderDesc : categoryOrderAsc;
+
+    const catDiff = orderArr.indexOf(ca) - orderArr.indexOf(cb);
+    if (catDiff !== 0) return catDiff;
+
+    // если категории одинаковые → сортируем по значению
+    const result = va.toString().toLowerCase().localeCompare(vb.toString().toLowerCase(), undefined, { numeric: true });
+    return order === "desc" ? -result : result;
+  });
+}
+
+const filterList = computed(() => {
+  // let list = children.value.filter((e) => e.fullname.toLowerCase().indexOf(filter.value.name) > -1)
+  let list = children.value
+  if (filter.value.name) {
+    list = children.value.filter((e) =>
+      e.full_name.toLowerCase().indexOf(filter.value.name) > -1 ||
+      e.phone?.toLowerCase()?.indexOf(filter.value.name) > -1 ||
+      e.instagram_username?.toLowerCase()?.indexOf(filter.value.name) > -1
+    )
+  }
+  // if (filter.value.tariff !== 'all') {
+  //   list = list.filter((e) => e.tariff === filter.value.tariff)
+  // }
+  // if (filter.value.curator !== 'all') {
+  //   list = list.filter((e) => +e.curator_id === +filter.value.curator)
+  // }
+  return list
+})
+
+const paginateList = computed(() => filterList.value.slice((filter.value.page - 1) * filter.value.size, (filter.value.page) * filter.value.size))
 
 const openTab = (tab) => {
   router.replace({params: {name: tab}})

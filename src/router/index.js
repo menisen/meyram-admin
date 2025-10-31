@@ -179,6 +179,24 @@ const routes = [
     beforeEnter: hasToken
   },
   {
+    path: '/courses',
+    name: 'courses',
+    meta: {
+      layout: 'default'
+    },
+    component: () => import(/* webpackChunkName: "courses" */ '../views/notifications/components/courses.vue'),
+    beforeEnter: hasToken
+  },
+  {
+    path: '/lives',
+    name: 'lives',
+    meta: {
+      layout: 'default'
+    },
+    component: () => import(/* webpackChunkName: "lives" */ '../views/notifications/components/lives.vue'),
+    beforeEnter: hasToken
+  },
+  {
     path: '/auth/signin',
     name: 'signin',
     component: () => import(/* webpackChunkName: "signin" */ '../views/auth/signin.vue'),
