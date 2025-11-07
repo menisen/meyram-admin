@@ -165,6 +165,9 @@ import {onMounted, ref} from 'vue'
 import Cookies from 'js-cookie'
 import { Icon } from '@iconify/vue'
 import api from '@/utils/api.js'
+import { useGlobalStore } from '@/store/globalStore'
+
+const globalStore = useGlobalStore()
 
 const route = useRoute()
 const router = useRouter()
@@ -202,6 +205,7 @@ const data = async () => {
     await api.get(`/users/profile?uid=${Cookies.get('admin-meyram-uid')}`)
       .then((res) => {
         profile.value = res.data?.data
+        globalStore.updateProfile(res.data?.data)
       })
       .catch((e) => {
         console.log(e, e.response, e.request)
