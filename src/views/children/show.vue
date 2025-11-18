@@ -382,6 +382,9 @@ import Swal from 'sweetalert2'
 import Cookies from 'js-cookie'
 import { MaskInput } from 'vue-mask-next'
 // import { vMaska } from "maska"
+import { useGlobalStore } from '@/store/globalStore'
+
+const globalStore = useGlobalStore()
 
 const child = ref([])
 const chatHistories = ref([])
@@ -396,6 +399,7 @@ const chatListContent = ref(null)
 const chatFormData = ref({
   message: ''
 })
+
 
 const profile = ref({
   full_name: '',
@@ -498,6 +502,7 @@ const sendMessage = async () => {
   if (!child.value.uid) {
     return
   }
+  const message = chatFormData.value.message
   await api.post(`/admin/chat/${child.value.uid}/send`, {
     message: chatFormData.value.message
   })
@@ -505,6 +510,14 @@ const sendMessage = async () => {
       chatFormData.value.message = ''
       await getChatData()
     })
+    
+  await api.post('/admin/fcm/send',{
+    title: globalStore.profile.name,
+    body:message ,
+    to:child.value.uid
+  }).then(res =>{
+    toast.success('Уведомления успешно отправлена')
+  })
 }
 
 const getChatData = async () => {
