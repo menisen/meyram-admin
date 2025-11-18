@@ -15,9 +15,9 @@
   <div class="card basic-data-table">
     <div
       class="card-header border-bottom bg-base py-16 px-24 d-flex align-items-center flex-wrap gap-3 justify-content-between">
-      <div class="d-flex align-items-center flex-wrap gap-3">
+      <div class="d-sm-flex align-items-center flex-wrap gap-3">
         <form @submit.prevent class="navbar-search">
-          <input v-model="filter.name" @input="filterNameHandler" type="text" class="bg-base h-40-px w-full"
+          <input v-model="filter.name" @input="filterNameHandler" type="text" class="bg-base h-40-px w-100"
                  name="search" placeholder="Поиск по имени">
           <Icon icon="ion:search-outline" class="icon"/>
         </form>

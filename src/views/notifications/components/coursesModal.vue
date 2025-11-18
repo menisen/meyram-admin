@@ -46,11 +46,11 @@
                 <template v-if="formData.id">
                   <div class="col-12 mb-20">
                     <label class="form-label fw-semibold text-primary-light text-sm mb-8">Название</label>
-                    <input disabled v-model="formData.id.title" type="text" class="form-control radius-8" placeholder="Введите название">
+                    <input v-model="formData.id.title" type="text" class="form-control radius-8" placeholder="Введите название">
                   </div>
                   <div class="col-12 mb-20">
                     <label class="form-label fw-semibold text-primary-light text-sm mb-8">Ссылка</label>
-                    <input disabled v-model="formData.id.link" type="text" class="form-control radius-8" placeholder="Введите название">
+                    <input v-model="formData.id.link" type="text" class="form-control radius-8" placeholder="Введите название">
                   </div>
                   <div class="col-12 mb-20">
                     <label class="form-label fw-semibold text-primary-light text-sm mb-8">Описание</label>

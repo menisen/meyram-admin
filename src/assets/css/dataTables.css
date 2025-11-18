@@ -301,6 +301,7 @@ table.dataTable thead th,table.dataTable tfoot th {
 }
 
 table.dataTable>thead>tr>th,table.dataTable>thead>tr>td {
+  vertical-align: middle;
   padding: 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.3)
 }

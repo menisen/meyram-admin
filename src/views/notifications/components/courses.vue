@@ -2,14 +2,6 @@
   <div class="card basic-data-table">
     <div
       class="card-header border-bottom bg-base py-16 px-24">
-      <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
-        <!--        <span class="text-md fw-medium text-secondary-light mb-0">Список единицы измерения</span>-->
-        <!--        <form @submit.prevent class="navbar-search">-->
-        <!--          <input v-model="filter.name" @input="filterNameHandler" type="text" class="bg-base h-40-px w-full"-->
-        <!--                 name="search" placeholder="Поиск по наименованию">-->
-        <!--          <Icon icon="ion:search-outline" class="icon"/>-->
-        <!--        </form>-->
-      </div>
       <div class="d-flex align-items-center justify-content-between">
         <h6 class="fw-semibold mb-0">Уроки</h6>
         <a
@@ -19,6 +11,14 @@
           <Icon icon="ic:baseline-plus" class="icon text-xl line-height-1"/>
           Отправить всем урок
         </a>
+      </div>
+      <div class="mt-16 col-sm-12 col-md-6">
+        <!--        <span class="text-md fw-medium text-secondary-light mb-0">Список единицы измерения</span>-->
+        <form @submit.prevent class="navbar-search w-100">
+          <input v-model="filter.name" @input="filterNameHandler" type="text" class="bg-base h-40-px w-100"
+                 name="search" placeholder="Поиск по наименованию">
+          <Icon icon="ion:search-outline" class="icon"/>
+        </form>
       </div>
     </div>
     <div class="card-body">
@@ -40,6 +40,14 @@
               data-page-length="10"
               aria-describedby="dataTable_info"
             >
+              <colgroup>
+                <col style="width: 100px">
+                <col style="width: 200px">
+                <col style="width: 150px">
+                <col style="width: 150px">
+                <col style="width: 200px">
+                <col style="width: 70px">
+              </colgroup>
               <thead>
               <tr role="row">
                 <th
@@ -95,6 +103,78 @@
                   data-dt-column="0"
                   rowspan="1"
                   colspan="1"
+                  class="dt-orderable-asc dt-orderable-desc"
+                  :class="{
+                    'dt-ordering-asc': sort.orderBy === 'category' && sort.order === 'asc',
+                    'dt-ordering-desc': sort.orderBy === 'category' && sort.order === 'desc'
+                  }"
+                  aria-sort="ascending"
+                  aria-label="Name"
+                  tabindex="1"
+                  @click="sortBy('category')"
+                >
+                  <span class="dt-column-title" role="button">
+                    <div class="form-check style-check d-flex align-items-center">
+                      <label class="form-check-label">
+                        Категория
+                      </label>
+                    </div>
+                  </span>
+                  <span class="dt-column-order"></span>
+                </th>
+                <th
+                  scope="col"
+                  data-dt-column="0"
+                  rowspan="1"
+                  colspan="1"
+                  class="dt-orderable-asc dt-orderable-desc"
+                  :class="{
+                    'dt-ordering-asc': sort.orderBy === 'link' && sort.order === 'asc',
+                    'dt-ordering-desc': sort.orderBy === 'link' && sort.order === 'desc'
+                  }"
+                  aria-sort="ascending"
+                  aria-label="Name"
+                  tabindex="1"
+                  @click="sortBy('link')"
+                >
+                  <span class="dt-column-title" role="button">
+                    <div class="form-check style-check d-flex align-items-center">
+                      <label class="form-check-label">
+                        Видео
+                      </label>
+                    </div>
+                  </span>
+                  <span class="dt-column-order"></span>
+                </th>
+                <th
+                  scope="col"
+                  data-dt-column="0"
+                  rowspan="1"
+                  colspan="1"
+                  class="dt-orderable-asc dt-orderable-desc"
+                  :class="{
+                    'dt-ordering-asc': sort.orderBy === 'description' && sort.order === 'asc',
+                    'dt-ordering-desc': sort.orderBy === 'description' && sort.order === 'desc'
+                  }"
+                  aria-sort="ascending"
+                  aria-label="Name"
+                  tabindex="1"
+                  @click="sortBy('description')"
+                >
+                  <span class="dt-column-title" role="button">
+                    <div class="form-check style-check d-flex align-items-center">
+                      <label class="form-check-label">
+                        Описание
+                      </label>
+                    </div>
+                  </span>
+                  <span class="dt-column-order"></span>
+                </th>
+                <th
+                  scope="col"
+                  data-dt-column="0"
+                  rowspan="1"
+                  colspan="1"
                   class="dt-orderable-asc dt-orderable-desc dt-ordering-asc"
                   aria-sort="ascending"
                   aria-label="S.L: Activate to invert sorting"
@@ -123,18 +203,28 @@
                   </div>
                 </td>
                 <td>{{ item.title }}</td>
+                <td>{{ item.category }}</td>
+                <td>
+                  <iframe
+                    v-if="item.link?.includes('youtu')"
+                    width="150"
+                    height="100"
+                    :src="`https://www.youtube.com/embed/${item.link?.slice(17)}`"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                  </iframe>
+                  <p v-else>{{ item.link }}</p>
+                </td>
+                <td>{{ item.description }}</td>
                 <td @click.stop>
                   <div class="d-flex align-items-center gap-10">
                     <a
                       @click="openModal(item)"
                       class="bg-success-focus text-success-600 bg-hover-success-200 fw-medium w-40-px h-40-px d-flex justify-content-center align-items-center rounded-circle"
                     >
-                      <Icon icon="lucide:edit" />
-                    </a>
-                    <a
-                      @click="removeChild(item.id)"
-                      class="cursor-pointer remove-item-btn bg-danger-focus bg-hover-danger-200 text-danger-600 fw-medium w-40-px h-40-px d-flex justify-content-center align-items-center rounded-circle">
-                      <Icon icon="mingcute:delete-2-line" />
+                      <Icon icon="solar:gallery-send-outline" />
                     </a>
                   </div>
                 </td>
@@ -217,7 +307,7 @@ const sort = ref({
 const showFilters = ref(false)
 
 const getData = async () => {
-  await api.get('/user/tasks/library')
+  await api.get('/library/resources')
     .then((res) => {
       data.value = res.data.data
     })
@@ -257,12 +347,9 @@ function sortCustom(arr, key, order = "asc") {
 
 const filterList = computed(() => {
   let list = data.value
-  if (filter.value.name) {
-    list = data.value.filter((e) =>
-      e.name.toLowerCase().indexOf(filter.value.name) > -1 ||
-      e.code?.toLowerCase()?.indexOf(filter.value.name) > -1
-    )
-  }
+  list = data.value.filter((e) =>
+    e.title?.toLowerCase()?.indexOf(filter.value.name?.toLowerCase()) > -1
+  )
   if (sort.value.orderBy) {
     list = sortCustom([...list], sort.value.orderBy, sort.value.order)
   }

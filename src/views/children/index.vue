@@ -15,16 +15,16 @@
   <div class="card basic-data-table">
     <div
       class="card-header border-bottom bg-base py-16 px-24 d-flex align-items-center flex-wrap gap-3 justify-content-between">
-      <div class="d-flex align-items-center flex-wrap gap-3">
+      <div class="d-flex align-items-center flex-wrap gap-3 col-lg-6 col-sm-12">
         <span class="text-md fw-medium text-secondary-light mb-0">Список участников</span>
-        <form @submit.prevent class="navbar-search">
-          <input v-model="filter.name" @input="filterNameHandler" type="text" class="bg-base h-40-px w-full"
+        <form @submit.prevent class="navbar-search w-100">
+          <input v-model="filter.name" @input="filterNameHandler" type="text" class="bg-base h-40-px w-100"
                  name="search" placeholder="Поиск по имени, телефону, instagram">
           <Icon icon="ion:search-outline" class="icon"/>
         </form>
       </div>
-      <div class="d-flex align-items-center">
-        <a @click="showFilters = !showFilters" class="btn btn-outline-info text-sm btn-sm px-12 py-12 radius-8 d-flex align-items-center gap-2 mx-3">
+      <div class="d-flex align-items-center gap-3">
+        <a @click="showFilters = !showFilters" class="btn btn-outline-info text-sm btn-sm px-12 py-12 radius-8 d-flex align-items-center gap-2 ">
           <Icon icon="solar:filter-bold" class="icon text-xl line-height-1"/>
         </a>
         <router-link to="/children/add"

@@ -14,10 +14,10 @@
   </div>
   <div class="card basic-data-table">
     <div class="card-header border-bottom bg-base py-16 px-24 d-flex align-items-center flex-wrap gap-3 justify-content-between">
-      <div class="d-flex align-items-center flex-wrap gap-3">
+      <div class="d-flex align-items-center flex-wrap gap-3 col-md-6 col-sm-12">
         <span class="text-md fw-medium text-secondary-light mb-0">Список сотрудников</span>
-        <form class="navbar-search">
-          <input v-model="filter.name" @input="filterNameHandler" type="text" class="bg-base h-40-px w-full" name="search" placeholder="Поиск по имени, телефону, instagram">
+        <form class="navbar-search w-100">
+          <input v-model="filter.name" @input="filterNameHandler" type="text" class="bg-base h-40-px w-100" name="search" placeholder="Поиск по имени, телефону, instagram">
           <Icon icon="ion:search-outline" class="icon" />
         </form>
       </div>
@@ -37,6 +37,15 @@
               aria-describedby="dataTable_info"
               style="width: 1067px;"
             >
+              <colgroup>
+                <col style="width: 75px;">
+                <col>
+                <col style="width: 125px;">
+                <col style="width: 150px;">
+                <col style="width: 100px;">
+                <col style="width: 130px;">
+                <col style="width: 150px;">
+              </colgroup>
               <thead>
               <tr role="row">
                 <th

@@ -186,7 +186,7 @@
 
               <div class="d-flex align-items-center flex-wrap gap-3 justify-content-between mb-10">
                 <h6 class="text-md text-primary-light">Участники клана</h6>
-                <button v-if="formData.member_count < 8" @click="openModal()" class="btn btn-primary text-sm btn-sm px-12 py-12 radius-8 d-flex align-items-center gap-2">
+                <button @click="openModal()" class="btn btn-primary text-sm btn-sm px-12 py-12 radius-8 d-flex align-items-center gap-2">
                   <Icon icon="ic:baseline-plus" class="icon text-xl line-height-1"/>
                   Добавить участника
                 </button>

@@ -14,21 +14,33 @@
   </div>
   <div class="card basic-data-table">
     <div
-      class="card-header border-bottom bg-base py-16 px-24 d-flex align-items-center flex-wrap gap-3 justify-content-between">
-      <div class="d-flex align-items-center flex-wrap gap-3">
-        <form @submit.prevent class="navbar-search">
-          <input v-model="filter.name" @input="filterNameHandler" type="text" class="bg-base h-40-px w-full"
-                 name="search" placeholder="Поиск по имени, instagram">
-          <Icon icon="ion:search-outline" class="icon"/>
-        </form>
-      </div>
-      <div class="col-md-3 col-sm-6 mb-20">
-        <label for="curators" class="form-label fw-semibold text-primary-light text-sm mb-8">Лига</label>
-        <select required v-model="filter.league" class="form-control radius-8 form-select" id="curators">
-          <option value="all">Все</option>
-          <option value="">Без лиги</option>
-          <option v-for="(item, index) in leagues" :key="index" :value="index">{{ item }}</option>
-        </select>
+      class="card-header border-bottom bg-base py-16 px-24">
+      <div class="row">
+        <div class="col-md-6 col-sm-12 d-flex flex-column justify-content-end mb-10">
+          <label for="leagues" class="form-label fw-semibold text-primary-light text-sm mb-8">Поиск</label>
+          <form @submit.prevent class="navbar-search d-block w-100">
+            <!--          <label for="search" class="form-label fw-semibold text-primary-light text-sm mb-8">Поиск</label>-->
+            <input v-model="filter.name" @input="filterNameHandler" type="text" class="bg-base h-40-px w-full w-100"
+                   name="search" placeholder="Поиск по имени, instagram">
+            <Icon icon="ion:search-outline" class="icon"/>
+          </form>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-10">
+          <label for="leagues" class="form-label fw-semibold text-primary-light text-sm mb-8">Бренд-менеджер</label>
+          <select @change="changeCuratorHandler" required v-model="filter.curator" class="form-control radius-8 form-select" id="leagues">
+            <option value="all">Все</option>
+            <option value="">Без менеджера</option>
+            <option v-for="(item, index) in curators" :key="index" :value="item.full_name">{{ item.full_name }}</option>
+          </select>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-10">
+          <label for="leagues" class="form-label fw-semibold text-primary-light text-sm mb-8">Лига</label>
+          <select required v-model="filter.league" class="form-control radius-8 form-select" id="leagues">
+            <option value="all">Все</option>
+            <option value="">Без лиги</option>
+            <option v-for="(item, index) in leagues" :key="index" :value="index">{{ item }}</option>
+          </select>
+        </div>
       </div>
     </div>
     <div class="card-body pb-48">
@@ -48,6 +60,7 @@
                 <!--                <col data-dt-column="4" style="width: 150px;">-->
                 <col data-dt-column="5" style="width: 152px;">
                 <col data-dt-column="6" style="width: 100px;">
+                <col data-dt-column="6" style="width: 150px;">
                 <col data-dt-column="6" style="width: 100px;">
 <!--                <col data-dt-column="7" style="width: 150px;">-->
 <!--                <col data-dt-column="8" style="width: 160px;">-->
@@ -155,6 +168,29 @@
                   data-dt-column="6"
                   rowspan="1"
                   colspan="1"
+                  :class="{
+                    'dt-ordering-asc': sort.orderBy === 'rating' && sort.order === 'asc',
+                    'dt-ordering-desc': sort.orderBy === 'rating' && sort.order === 'desc'
+                  }"
+                  aria-sort="ascending"
+                  aria-label="S.L: Activate to invert sorting"
+                  tabindex="0"
+                  @click="sortBy('rating')"
+                >
+                  <span class="dt-column-title" role="button">
+                    <div class="form-check style-check d-flex align-items-center">
+                      <label class="form-check-label">
+                         Бренд-менеджер
+                      </label>
+                    </div>
+                  </span>
+                  <span class="dt-column-order"></span>
+                </th>
+                <th
+                  scope="col"
+                  data-dt-column="6"
+                  rowspan="1"
+                  colspan="1"
                   aria-sort="ascending"
                   aria-label="S.L: Activate to invert sorting"
                   tabindex="0"
@@ -207,6 +243,7 @@
                   <a :href="`https://instagram.com/${child.instagram_username}`">{{ child.instagram_username }}</a>
                 </td>
                 <td>{{ child.rating }}</td>
+                <td>{{ child.curator_name }}</td>
                 <td>{{ leagues[child.league_name] }}</td>
 <!--                <td @click.stop>-->
 <!--                  <router-link :to="`/children/${child.id}/show`"-->
@@ -229,18 +266,34 @@
             </table>
           </div>
         </div>
-        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mt-24 page-bottom">
-          Общее: {{ filterList.length }}
+        <div class="row my-10">
+          <div class="col-6 pt-2">
+            Общее: {{ filterList.length }}
+          </div>
+          <div v-if="filter.curator && filter.curator !== 'all'" class="col-6 text-end">
+            <a @click="exportList()" class="btn btn-primary text-sm btn-sm px-12 py-12 radius-8">
+              Скачать данные
+            </a>
+          </div>
         </div>
         <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 page-bottom">
           <span>Показано с {{ (filter.page) * filter.size + 1 }} по {{
               (filter.page + 1) * Math.min(filter.size, filterList.length)
             }} из {{ Math.ceil(filterList.length / filter.size) }} записей</span>
+<!--          <paginate-->
+<!--            :page-count="Math.ceil(filterList.length / filter.size)"-->
+<!--            :click-handler="changePaginateHandler"-->
+<!--            prev-text="Прев"-->
+<!--            next-text="След"-->
+<!--          >-->
+<!--          </paginate>-->
           <paginate
-            :page-count="Math.ceil(filterList.length / filter.size)"
-            :click-handler="changePaginateHandler"
-            prev-text="Прев"
-            next-text="След"
+            v-model="filter.page"
+            :pages="Math.ceil(filterList.length / filter.size)"
+            :range-size="1"
+            active-color="#DCEDFF"
+            @update:modelValue="changePaginateHandler"
+
           >
           </paginate>
 
@@ -276,18 +329,19 @@
 <script setup>
 import {computed, onMounted, ref} from 'vue'
 import api from '@/utils/api.js'
-import Paginate from 'vuejs-paginate-next'
+import Paginate from "@hennge/vue3-pagination"
 import Swal from 'sweetalert2'
 import { Icon } from "@iconify/vue"
 import router from '@/router/index.js'
 import {useToast} from 'vue-toastification'
 import Cookies from 'js-cookie'
+import '@hennge/vue3-pagination/dist/vue3-pagination.css'
 
 const children = ref([])
 const role = Cookies.get('admin-meyram-role') || null
 const filter = ref({
   name: '',
-  page: 0,
+  page: 1,
   size: 10,
   curator: role === 'curator' ? Cookies.get('admin-meyram-profile-id') : 'all',
   tariff: 'all',
@@ -317,6 +371,10 @@ const data = async () => {
     })
     .catch((e) => {
       console.log(e, e.response, e.request)
+    })
+  await api.get('/admin/staff')
+    .then((res) => {
+      curators.value = res.data.data
     })
 }
 
@@ -362,20 +420,23 @@ const filterList = computed(() => {
   if (filter.value.league !== 'all') {
     list = list.filter((e) => e.league_name === filter.value.league)
   }
+  if (filter.value.curator !== 'all') {
+    list = list.filter((e) => e.curator_name === filter.value.curator)
+  }
   if (sort.value.orderBy) {
     list = sortCustom([...list], sort.value.orderBy, sort.value.order)
   }
   return list
 })
 
-const paginateList = computed(() => filterList.value.slice(filter.value.page * filter.value.size, (filter.value.page + 1) * filter.value.size))
+const paginateList = computed(() => filterList.value.slice((filter.value.page - 1) * filter.value.size, (filter.value.page) * filter.value.size))
 
 const changePaginateHandler = (e) => {
-  filter.value.page = e - 1
+  filter.value.page = e
 }
 
 const sortBy = (key) => {
-  filter.value.page = 0
+  filter.value.page = 1
   const lastValue = {...sort.value}
   if (sort.value.orderBy === key && sort.value.order === 'desc') {
     sort.value.orderBy = ''
@@ -387,7 +448,25 @@ const sortBy = (key) => {
 }
 
 const filterNameHandler = () => {
-  filter.value.page = 0
+  filter.value.page = 1
+}
+
+const changeCuratorHandler = () => {
+  filter.value.page = 1
+}
+
+const exportList = async () => {
+  const curator = curators.value.find((e) => e.full_name === filter.value.curator)
+  await api.get(`/admin/rating/curator/${curator.id}/export`, { responseType: 'blob' })
+    .then((res) => {
+      const url = window.URL.createObjectURL(new Blob([res.data]))
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', 'report.xlsx')
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+    })
 }
 
 onMounted(() => {

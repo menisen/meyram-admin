@@ -210,7 +210,7 @@
                                    placeholder="Введите роль">
                           </div>
                           <div class="col-md-3 col-sm-12 mt-10">
-                            <label class="form-label fw-semibold text-primary-light text-sm mb-8">Названия роли</label>
+                            <label class="form-label fw-semibold text-primary-light text-sm mb-8">Описание</label>
                             <input v-model="item.character_description" type="text" class="form-control radius-8"
                                    placeholder="Введите роль">
                           </div>
@@ -288,17 +288,17 @@
                   <!--                  </template>-->
                 </div>
                 <div class="row">
-                  <div class="col-lg-3 col-sm-12 mt-20">
+                  <div class="col-md-3 col-sm-12 mt-20">
                     <button @click="cancel()" type="button" class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md py-11 radius-8 w-100 text-center">
                       Отмена
                     </button>
                   </div>
-                  <div class="col-lg-3 col-sm-12 mt-20">
+                  <div class="col-md-3 col-sm-12 mt-20">
                     <button @click="remove()" type="button" class="btn btn-danger border border-danger-600 bg-hover-danger-200 text-md px-56 py-11 w-100 text-center radius-8">
                       Удалить
                     </button>
                   </div>
-                  <div class="col-lg-3 col-sm-12 mt-20">
+                  <div class="col-md-3 col-sm-12 mt-20">
                     <button type="submit" class="btn btn-primary border border-primary-600 text-md py-12 radius-8 w-100">
                       Сохранить
                     </button>

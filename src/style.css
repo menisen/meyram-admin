@@ -4239,9 +4239,32 @@ html[data-theme=dark] .dark-bg-neutral-200 {
 .m-440 {
   margin: var(--size-440);
 }
-
-.mx-2 {
-  margin-inline: var(--size-2) !important;
+.mr-0 {
+  margin-right: 0 !important;
+}
+.mr-2 {
+  margin-right: var(--size-2) !important;
+}
+.mr-4 {
+  margin-right: var(--size-4) !important;
+}
+.mr-6 {
+  margin-right: var(--size-6) !important;
+}
+.mr-8 {
+  margin-right: var(--size-8) !important;
+}
+.mr-9 {
+  margin-right: var(--size-9) !important;
+}
+.mr-10 {
+  margin-right: var(--size-10) !important;
+}
+.mr-11 {
+  margin-right: var(--size-11) !important;
+}
+.mr-12 {
+  margin-right: var(--size-12) !important;
 }
 
 .mx-4 {
@@ -14778,7 +14801,7 @@ td.fc-header-center {
 }
 .navbar-search {
   position: relative;
-  display: none;
+  /*display: none;*/
 }
 
 @media (min-width: 992px) {
