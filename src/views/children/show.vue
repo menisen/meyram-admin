@@ -514,7 +514,8 @@ const sendMessage = async () => {
   await api.post('/admin/fcm/send',{
     title: globalStore.profile.name,
     body:message ,
-    to:child.value.uid
+    to:child.value.uid,
+    from:'curator'
   }).then(res =>{
     toast.success('Уведомления успешно отправлена')
   })
